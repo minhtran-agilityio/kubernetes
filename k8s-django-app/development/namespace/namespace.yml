@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  namespace: k8s-django-app-development
+  name: k8s-django-app-development
+  labels:
+    project: k8s-django-app
+    environment: development
+    provider: minikube

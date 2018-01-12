@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    environment: development
+    app: stilton-cheese-deployment
+    kubernetes.io/minikube-addons: ingress
+    kubernetes.io/minikube-addons-endpoint: ingress
+    addonmanager.kubernetes.io/mode: Reconcile
+  name: stilton-cheese-deployment
+  namespace: k8s-django-app-development
+spec:
+  ports:
+  - nodePort: 32302
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: stilton-cheese-deployment
+  type: NodePort

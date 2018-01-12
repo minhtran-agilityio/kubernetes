@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: api-deployment
+    environment: development
+  name: api-deployment
+  namespace: k8s-django-app-development
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: api-deployment
+        environment: development
+      name: api-deployment
+      namespace: k8s-django-app-development
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: registrykey
+      containers:
+        - name: api-deployment
+          image: gcr.io/employee-191808/employee:v3
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /admin
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /admin
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: db-name
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: db-user
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: db-host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: db-port
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: db-password
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8000

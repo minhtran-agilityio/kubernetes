@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: cheddar-cheese-deployment
+  name: cheddar-cheese-deployment
+  namespace: k8s-django-app-development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cheddar-cheese-deployment
+    spec:
+      containers:
+        - image: "errm/cheese:cheddar"
+          name: cheddar-cheese-deployment
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 80

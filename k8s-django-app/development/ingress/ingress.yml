@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+  name: api-ingress
+  namespace: k8s-django-app-development
+spec:
+  rules:
+  - host: mydjango
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: api-deployment
+          servicePort: 8000
+  - host: cheeses.all
+    http:
+      paths:
+      - path: /stilton
+        backend:
+          serviceName: stilton-cheese-deployment
+          servicePort: 80
+      - path: /cheddar
+        backend:
+          serviceName: cheddar-cheese-deployment
+          servicePort: 80

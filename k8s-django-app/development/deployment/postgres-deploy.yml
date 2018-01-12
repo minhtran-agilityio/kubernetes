@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: k8s-django-app-development
+  name: postgres-deployment
+  labels:
+    name: postgres-deployment
+    environment: development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: postgres-deployment
+      labels:
+        name: postgres-deployment
+        tier: database
+        environment: development
+    spec:
+      containers:
+      - name: postgres-deployment
+        image: b.gcr.io/cloudsql-docker/gce-proxy:1.05
+        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+                  "-instances=employee-191808:us-central1:employee=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        env:
+          - name: DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: db-user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: backend-secrets
+                key: db-password
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "125m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        volumeMounts:
+          - name: postgres-data
+            mountPath: /var/lib/postgresql/data
+        ports:
+          - containerPort: 5432
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data-claim

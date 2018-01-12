@@ -1,0 +1,12 @@
+.vscode
+__pycache__/
+*.pyc
+coverage/
+htmlcov/
+.coverage
+db.sqlite3
+cover/
+env/
+employee/
+bands/
+.dockerconfigjson

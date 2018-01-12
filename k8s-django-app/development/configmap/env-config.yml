@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: k8s-django-app-development
+  name: env-config
+  labels:
+    name: env-config
+    project: k8s-django-app
+    environment: development
+data:
+  db-name: postgres-sql
+  db-user: YWRtaW4=
