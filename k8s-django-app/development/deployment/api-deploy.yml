@@ -7,7 +7,7 @@ metadata:
   name: api-deployment
   namespace: k8s-django-app-development
 spec:
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -21,7 +21,7 @@ spec:
         - name: registrykey
       containers:
         - name: api-deployment
-          image: gcr.io/employee-191808/employee:v3
+          image: minhtranagility/employee:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

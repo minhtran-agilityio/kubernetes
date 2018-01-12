@@ -18,10 +18,7 @@ spec:
     spec:
       containers:
       - name: postgres-deployment
-        image: b.gcr.io/cloudsql-docker/gce-proxy:1.05
-        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
-                  "-instances=employee-191808:us-central1:employee=tcp:5432",
-                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        image: postgres
         env:
           - name: DB_USER
             valueFrom:
