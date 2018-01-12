@@ -10,5 +10,5 @@ env/
 employee/
 bands/
 .dockerconfigjson
-Employee-4190f35bf959.json
-Employee-ddf5bd99cfc7.json
+cloud_sql_proxy
+.json
