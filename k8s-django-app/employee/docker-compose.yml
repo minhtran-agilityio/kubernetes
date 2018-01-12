@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  django-webapp:
+    build:
+      context: .
+    command: /runserver.sh
+
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code

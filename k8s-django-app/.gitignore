@@ -7,6 +7,5 @@ htmlcov/
 db.sqlite3
 cover/
 env/
-employee/
 bands/
 .dockerconfigjson
